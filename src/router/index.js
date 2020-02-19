@@ -1,180 +1,183 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
 
+NProgress.configure({ showSpinner: false }) // NProgress Configuration
 Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantRoutes = [
   {
-    path: '/login',
+    path: '/',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/error-page/404'),
     hidden: true
   },
-
   {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  }
+]
 
+export const userRoutes = [
   {
-    path: '/example',
+    path: '/notification-management',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
+    redirect: '/notification-management/index',
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        component: () => import('@/views/notification-management/index.vue'),
+        name: 'NotificationManagement',
+        meta: { title: '通知管理', icon: 'dashboard' }
       }
     ]
-  },
-
-  {
-    path: '/nested',
+  }, {
+    path: '/maintain-info-management',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
+    redirect: '/maintain-info-management/index',
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'index',
+        component: () => import('@/views/maintain-info-management/index.vue'),
+        name: 'MaintainInfoManagement',
+        meta: { title: '维修信息管理', icon: 'dashboard' }
       }
     ]
-  },
-
-  {
-    path: 'external-link',
+  }, {
+    path: '/mobile-info-management',
     component: Layout,
+    redirect: '/mobile-info-management/index',
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'index',
+        component: () => import('@/views/mobile-info-management/index.vue'),
+        name: 'MaintainInfoManagement',
+        meta: { title: '手机信息管理', icon: 'dashboard' }
       }
     ]
-  },
+  }
+]
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+export const adminRoutes = [
+  {
+    path: '/user-info-management',
+    component: Layout,
+    redirect: '/user-info-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user-info-management/index.vue'),
+        name: 'UserInfoManagement',
+        meta: { title: '用户信息', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/mobile-info-management',
+    component: Layout,
+    redirect: '/mobile-info-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/mobile-info-management/index.vue'),
+        name: 'MaintainInfoManagement',
+        meta: { title: '手机信息管理', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/fault-info-management',
+    component: Layout,
+    redirect: '/fault-info-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/fault-info-management/index.vue'),
+        name: 'FaultInfoManagement',
+        meta: { title: '故障信息管理', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/order-management',
+    component: Layout,
+    redirect: '/order-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/order-management/index.vue'),
+        name: 'OrderManagement',
+        meta: { title: '维修订单管理', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/parts-management',
+    component: Layout,
+    redirect: '/parts-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/parts-management/index.vue'),
+        name: 'PartsManagement',
+        meta: { title: '零件管理', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/visitor-management',
+    component: Layout,
+    redirect: '/visitor-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/visitor-management/index.vue'),
+        name: 'VisitorManagement',
+        meta: { title: '访客管理', icon: 'dashboard' }
+      }
+    ]
+  }
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: [
+    ...userRoutes,
+    ...adminRoutes,
+    ...constantRoutes,
+    { path: '*', redirect: '/404', hidden: true }
+  ]
 })
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
 
 export default router
+
+// 防止手动输入地址进行访问路由
+// router.beforeEach((to, from, next) => {
+//   // start progress bar
+//   NProgress.start()
+//
+//   const userInfo = window.sessionStorage.getItem('token')
+//   if (userInfo) {
+//     next()
+//     NProgress.done()
+//   } else {
+//     if (to.path === '/') {
+//       next()
+//       NProgress.done()
+//     } else {
+//       next('/')
+//       NProgress.done()
+//     }
+//   }
+// })

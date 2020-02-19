@@ -15,6 +15,36 @@
   display: none;
 }
 
+.cell {
+  .el-tag {
+    margin-right: 0px;
+  }
+}
+
+.small-padding {
+  .cell {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.fixed-width {
+  .el-button--mini {
+    padding: 7px 10px;
+    width: 60px;
+  }
+}
+
+.status-col {
+  .cell {
+    padding: 0 10px;
+    text-align: center;
+
+    .el-tag {
+      margin-right: 0px;
+    }
+  }
+}
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
@@ -43,7 +73,51 @@
   }
 }
 
-// to fix el-date-picker css style
-.el-range-separator {
-  box-sizing: content-box;
+// fix date-picker ui bug in filterArr-item
+.el-range-editor.el-input__inner {
+  display: inline-flex !important;
+}
+
+// 覆盖Element - UI 样式
+
+//卡片
+.el-card__header , .el-card__body{
+  padding: 12px 13px!important;
+}
+.el-card__body {
+  height: calc(100% - 70px)!important;
+}
+
+//选择框
+.el-checkbox-group {
+  font-size: 12px!important;
+}
+
+//表单
+.el-form-item {
+  //margin-bottom: 10px!important;
+}
+
+//弹窗
+.el-dialog {
+  border-radius: 5px!important;
+}
+.el-dialog__body {
+  padding: 5px 20px!important;
+}
+.el-message-box {
+  border-radius: 15px!important;
+}
+
+//分隔线
+.el-divider--horizontal {
+  margin: 3px 0 !important;
+}
+
+//表格
+.el-table, .el-table__expanded-cell {
+  background-color: #F6F6F6!important;
+}
+.el-table th, .el-table tr {
+  background-color: #F6F6F6!important;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!item.hidden">
+  <div v-if="!item.hidden" v-show="permission(item)" class="menu-wrapper">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -30,6 +30,7 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
+import { mapState } from 'vuex'
 
 export default {
   name: 'SidebarItem',
@@ -55,6 +56,20 @@ export default {
     // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
+  },
+  computed: {
+    ...mapState('login', {
+      user: state => state.user
+    }),
+    permission() {
+      return function(item) {
+        if (item.meta && item.meta.role) {
+          return item.meta.role.includes(this.user.role)
+        } else {
+          return true
+        }
+      }
+    }
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
