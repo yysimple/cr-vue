@@ -5,7 +5,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 const name = '电脑维修订单管理系统' // page title
-const port = 9426 // dev port
+const port = 9416 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {

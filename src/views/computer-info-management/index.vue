@@ -1,6 +1,6 @@
 <!--电脑信息管理-->
 <template>
-  <div class="mobile-info-management app-container">
+  <div class="computer-info-management app-container">
     <div class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
@@ -31,7 +31,7 @@
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="80%">
       <el-form label-width="90px" style="margin: 0 30px;">
         <el-row type="flex" justify="space-between" style="width: 100%">
-          <el-col :span="12">
+          <el-col :span="10">
             <el-form-item label="电脑编号">
               <el-input v-model="form.computerNo" placeholder="请输入电脑编号" />
             </el-form-item>
@@ -45,16 +45,17 @@
               <el-input v-model="form.price" placeholder="请输入电脑价格" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="14">
             <el-form-item label="描述">
               <el-input v-model="form.remark" type="textarea" rows="3" placeholder="描述" />
             </el-form-item>
             <el-form-item label="图片">
               <el-upload
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action="http://www.wcx412.xyz:6543/file/computerFileUpload"
                 list-type="picture-card"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
+                :on-success="handleGetPic"
               >
                 <i class="el-icon-plus" />
               </el-upload>
@@ -80,7 +81,7 @@
 <script>
 import { apiGetComputers, apiAddComputer, apiEditComputer, apiDeleteComputer } from '@/api/computer'
 export default {
-  name: 'MobileInfoManagement',
+  name: 'ComputerInfoManagement',
   data() {
     return {
       tableData: [],
@@ -170,6 +171,11 @@ export default {
       }
     },
 
+    handleGetPic(file) {
+      this.form.url = file
+      console.log(file)
+    },
+
     handleRemove(file, fileList) {
       console.log(file, fileList)
     },
@@ -183,7 +189,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .mobile-info-management {
+  .computer-info-management {
     .el-dialog {
       min-width: 550px !important;
     }

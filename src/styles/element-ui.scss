@@ -113,3 +113,15 @@
 .el-divider--horizontal {
   margin: 3px 0 !important;
 }
+
+.el-upload-list--picture-card .el-upload-list__item {
+  width: 100px !important;
+  height: 100px !important;
+  line-height: 100px !important;
+}
+
+.el-upload--picture-card {
+  width: 100px !important;
+  height: 100px !important;
+  line-height: 100px !important;
+}

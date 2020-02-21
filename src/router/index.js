@@ -60,7 +60,7 @@ export const userRoutes = [
       {
         path: 'index',
         component: () => import('@/views/computer-info-management/index.vue'),
-        name: 'MaintainInfoManagement',
+        name: 'ComputerInfoManagement',
         meta: { title: '电脑信息管理', icon: 'dashboard' }
       }
     ]
