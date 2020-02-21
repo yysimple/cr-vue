@@ -7,7 +7,7 @@ function resolve(dir) {
 
 const titleMap = {
   'dev': '测试',
-  'prod': '维协危废监管系统'
+  'prod': '手机维修订单管理系统'
 }
 const name = titleMap[process.env.VUE_APP_ENV] // page title
 const port = 9426 // dev port

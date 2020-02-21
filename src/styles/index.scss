@@ -214,12 +214,13 @@ aside {
   z-index: 1000 !important;
 }
 
-.el-table th.is-leaf {
-  //background: #F5F7FA !important;
-}
+.filter-container {
+  padding-bottom: 10px;
 
-// 全局表格样式
-.el-table th {
-  //background: #F5F7FA !important;
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
 }
 

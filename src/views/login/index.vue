@@ -34,7 +34,7 @@
 
 <script>
 import StartLayout from './component/StartLayout'
-// import { apiRecycleLogin, apiAdminLogin } from '@/api/login'
+import { apiLogin } from '@/api/login'
 const Base64 = require('js-base64').Base64
 export default {
   name: 'Login',
@@ -117,16 +117,12 @@ export default {
             const role = this.loginForm.role
             const username = this.loginForm.username
             const password = this.loginForm.password
-            const userData = {}
             const pathMap = {
               'admin': 'UserInfoManagement',
               'user': 'NotificationManagement'
             }
-            // if (role === 'admin') {
-            //   userData = await apiAdminLogin({ username, password })
-            // } else {
-            //   userData = await apiRecycleLogin({ username, password })
-            // }
+            const userData = {}
+            // const userData = await apiLogin({ username, password })
             setTimeout(() => {
               this.setUserInfo()
               this.$store.dispatch('user/setUser', Object.assign(userData, this.loginForm))
@@ -139,6 +135,7 @@ export default {
             }, 1.5 * 1000)
           } catch (e) {
             this.loading = false
+            console.log(e)
             this.$message.error(e.msg)
           }
         } else {

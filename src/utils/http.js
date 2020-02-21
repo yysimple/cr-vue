@@ -25,11 +25,8 @@ const resError = (status) => {
   return err
 }
 
-const devIp = 'http://192.168.100.176:6789'
-const prodIp = 'http://jxwxkj-api.server.huntercat.cn'
-
 export const service = axios.create({
-  baseURL: process.env.VUE_APP_ENV === 'dev' ? devIp : prodIp,
+  baseURL: 'http://www.wcx412.xyz:6543',
   timeout: 30000
 })
 
