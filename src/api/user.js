@@ -9,8 +9,9 @@ export const apiGetUsers = () => {
 // 添加用户
 export const apiAddUser = param => {
   const { username, password } = param
-  const url = `user/save?username=${username}&password=${password}`
-  return service.post(url)
+  // const url = `user/save?username=${username}&password=${password}`
+  const url = `user/save`
+  return service.post(url, param)
 }
 
 // 编辑用户

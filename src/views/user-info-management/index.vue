@@ -81,6 +81,7 @@ export default {
         this.tableData = await apiGetUsers()
         this.tableLoading = false
       } catch (e) {
+        this.$message.error(`${e}`)
         this.tableLoading = false
       }
     },
@@ -110,7 +111,7 @@ export default {
           this.init()
         } catch (e) {
           this.dialogVisible = false
-          this.$message.error(e)
+          this.$message.error(`${e}`)
         }
       }).catch(() => {})
     },
@@ -129,7 +130,7 @@ export default {
         this.init()
       } catch (e) {
         this.dialogVisible = false
-        this.$message.error(e)
+        this.$message.error(`${e}`)
       }
     }
   }

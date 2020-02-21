@@ -1,22 +1,10 @@
 <!--访客管理-->
 <template>
   <div class="visitor-management app-container">
-    <div class="filter-container">
-      <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
-    </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作" width="90" fixed="right">
-        <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
-          <el-divider direction="vertical" />
-          <el-link :underline="false" type="danger" title="删除"><i class="el-icon-delete" /></el-link>
-        </template>
-      </el-table-column>
+      <el-table-column type="index" align="center" label="序号" />
+      <el-table-column align="center" prop="username" label="账号" />
+      <el-table-column align="center" width="150" prop="createTime" label="访问时间" />
     </el-table>
 
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
@@ -38,7 +26,7 @@
 </template>
 
 <script>
-import { apiGetUsers } from '@/api/user'
+import { apiGetVisitors } from '@/api/visitor'
 export default {
   name: 'VisitorManagement',
   data() {
@@ -61,8 +49,14 @@ export default {
   },
   methods: {
     async init() {
-      this.tableData = await apiGetUsers()
-      console.log(this.tableData)
+      this.tableLoading = true
+      try {
+        this.tableData = await apiGetVisitors()
+        this.tableLoading = false
+      } catch (e) {
+        this.$message.error(`${e}`)
+        this.tableLoading = false
+      }
     },
     openDialog(type, data) {
       this.dialogType = type

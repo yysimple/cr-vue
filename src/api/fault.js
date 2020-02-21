@@ -2,7 +2,7 @@ import { service } from '../utils/http'
 
 // 获取故障列表
 export const apiGetTroubles = () => {
-  const url = `/trouble/findAllTrouble`
+  const url = `trouble/findAllTrouble`
   return service.get(url)
 }
 
@@ -22,7 +22,7 @@ export const apiEditTroubleStatus = param => {
 // 删除故障
 export const apiDeleteTrouble = param => {
   const { troubleId } = param
-  const url = `/trouble/deleteTroubleById?troubleId=${troubleId}`
+  const url = `trouble/deleteTroubleById?troubleId=${troubleId}`
   return service.post(url)
 }
 

@@ -121,8 +121,8 @@ export default {
               'admin': 'UserInfoManagement',
               'user': 'NotificationManagement'
             }
-            const userData = {}
-            // const userData = await apiLogin({ username, password })
+            // const userData = {}
+            const userData = await apiLogin({ username, password })
             setTimeout(() => {
               this.setUserInfo()
               this.$store.dispatch('user/setUser', Object.assign(userData, this.loginForm))
@@ -134,9 +134,8 @@ export default {
               this.loading = false
             }, 1.5 * 1000)
           } catch (e) {
+            this.$message.error(`${e}`)
             this.loading = false
-            console.log(e)
-            this.$message.error(e.msg)
           }
         } else {
           console.log('error submit!!')

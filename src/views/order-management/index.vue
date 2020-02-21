@@ -1,28 +1,40 @@
 <!--订单管理-->
 <template>
   <div class="order-management app-container">
-    <div class="filter-container">
-      <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
-    </div>
+    <!--    <div class="filter-container">-->
+    <!--      <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>-->
+    <!--    </div>-->
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+      <el-table-column type="index" align="center" label="序号" />
+      <el-table-column align="center" prop="contact" label="联系人" />
+      <el-table-column align="center" prop="contactTel" label="联系电话" />
+      <el-table-column align="center" prop="remark" label="备注" />
+      <el-table-column align="center" label="状态">
+        <template slot-scope="{ row }">
+          <span>{{ ['未完成', '已完成'][row.status] }}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
+      <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
       <el-table-column align="center" label="操作" width="90" fixed="right">
         <template slot-scope="{row}">
           <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
           <el-divider direction="vertical" />
-          <el-link :underline="false" type="danger" title="删除"><i class="el-icon-delete" /></el-link>
+          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
       <el-form label-width="50px" style="margin: 0 30px;">
-        <el-form-item label="k1">
-          <el-input v-model="form.key" />
+        <el-form-item label="联系人">
+          <el-input v-model="form.contact" placaholder="请输入联系人" />
+        </el-form-item>
+        <el-form-item label="联系电话">
+          <el-input v-model="form.contactTel" placaholder="请输入联系电话" />
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input v-model="form.remark" placaholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" align="center">
@@ -38,7 +50,7 @@
 </template>
 
 <script>
-import { apiGetUsers } from '@/api/user'
+import { apiGetOrders, apiAddOrder, apiEditOrderStatus, apiDeleteOrder } from '@/api/order'
 export default {
   name: 'OrderManagement',
   data() {
@@ -47,12 +59,14 @@ export default {
       tableLoading: false,
       dialogType: 'add',
       dialogTitleMap: {
-        'add': '添加',
-        'edit': '编辑'
+        'add': '添加订单信息',
+        'edit': '编辑订单信息'
       },
       dialogVisible: false,
       form: {
-        key: 1
+        contact: '',
+        contactTel: '',
+        remark: ''
       }
     }
   },
@@ -60,22 +74,65 @@ export default {
     this.init()
   },
   methods: {
+    // 初始化
     async init() {
-      this.tableData = await apiGetUsers()
-      console.log(this.tableData)
+      this.tableLoading = true
+      try {
+        this.tableData = await apiGetOrders()
+        this.tableLoading = false
+      } catch (e) {
+        this.$message.error(`${e}`)
+        this.tableLoading = false
+      }
     },
+
+    // 打开模态框
     openDialog(type, data) {
       this.dialogType = type
       if (type === 'add') {
         this.form = {
-          key: 1
+          contact: '',
+          contactTel: '',
+          remark: ''
         }
       } else {
         this.form = data
       }
       this.dialogVisible = true
     },
-    handleSave() {}
+
+    // 删除订单信息
+    handleDelete(data) {
+      const option = { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }
+      this.$confirm('确定要删除?', '提示', option).then(async() => {
+        try {
+          await apiDeleteOrder(data)
+          this.$message({ message: '保存成功', type: 'success' })
+          this.init()
+        } catch (e) {
+          this.dialogVisible = false
+          this.$message.error(`${e}`)
+        }
+      }).catch(() => {})
+    },
+
+    // 保存订单信息
+    async handleSave() {
+      const type = this.dialogType
+      try {
+        if (type === 'add') {
+          await apiAddOrder(this.form)
+        } else {
+          await apiEditOrderStatus(this.form)
+        }
+        this.$message({ message: '保存成功', type: 'success' })
+        this.dialogVisible = false
+        this.init()
+      } catch (e) {
+        this.dialogVisible = false
+        this.$message.error(`${e}`)
+      }
+    }
   }
 }
 </script>

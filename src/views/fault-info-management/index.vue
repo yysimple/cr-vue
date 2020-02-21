@@ -14,6 +14,8 @@
         </template>
       </el-table-column>
       <el-table-column align="center" prop="remark" min-width="100" label="备注" />
+      <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
+      <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
       <el-table-column align="center" label="操作" width="90" fixed="right">
         <template slot-scope="{row}">
           <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
@@ -26,19 +28,19 @@
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
       <el-form label-width="50px" style="margin: 0 30px;">
         <el-form-item label="编号">
-          <el-input v-model="form.troubleNo" placeholder="请输入编号"/>
+          <el-input v-model="form.troubleNo" placeholder="请输入编号" />
         </el-form-item>
         <el-form-item label="名称">
-          <el-input v-model="form.troubleName" placeholder="请输入名称"/>
+          <el-input v-model="form.troubleName" placeholder="请输入名称" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="form.status" placeholder="请选择">
-            <el-option value="0" label="不可修复"></el-option>
-            <el-option value="1" label="可修复"></el-option>
+            <el-option value="0" label="不可修复" />
+            <el-option value="1" label="可修复" />
           </el-select>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input type="textarea" rows="3" v-model="form.remark" placeholder="备注"/>
+          <el-input v-model="form.remark" type="textarea" rows="3" placeholder="备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" align="center">
@@ -86,6 +88,7 @@ export default {
         this.tableData = await apiGetTroubles()
         this.tableLoading = false
       } catch (e) {
+        this.$message.error(`${e}`)
         this.tableLoading = false
       }
     },
@@ -117,7 +120,7 @@ export default {
           this.init()
         } catch (e) {
           this.dialogVisible = false
-          this.$message.error(e)
+          this.$message.error(`${e}`)
         }
       }).catch(() => {})
     },
@@ -136,7 +139,7 @@ export default {
         this.init()
       } catch (e) {
         this.dialogVisible = false
-        this.$message.error(e)
+        this.$message.error(`${e}`)
       }
     }
   }
