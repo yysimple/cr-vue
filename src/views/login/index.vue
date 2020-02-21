@@ -3,7 +3,7 @@
     <start-layout>
       <div slot="content" class="form-box">
         <div class="box-header">
-          <span class="ml-10">手机维修订单管理系统</span>
+          <span class="ml-10">电脑维修订单管理系统</span>
         </div>
         <el-form ref="loginForm" label-width="50px" class="box-form" :model="loginForm" :rules="loginRules">
           <el-form-item label="账号" prop="username">

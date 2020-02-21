@@ -53,15 +53,15 @@ export const userRoutes = [
       }
     ]
   }, {
-    path: '/mobile-info-management',
+    path: '/computer-info-management',
     component: Layout,
-    redirect: '/mobile-info-management/index',
+    redirect: '/computer-info-management/index',
     children: [
       {
         path: 'index',
-        component: () => import('@/views/mobile-info-management/index.vue'),
+        component: () => import('@/views/computer-info-management/index.vue'),
         name: 'MaintainInfoManagement',
-        meta: { title: '手机信息管理', icon: 'dashboard' }
+        meta: { title: '电脑信息管理', icon: 'dashboard' }
       }
     ]
   }
@@ -81,15 +81,15 @@ export const adminRoutes = [
       }
     ]
   }, {
-    path: '/mobile-info-management',
+    path: '/computer-info-management',
     component: Layout,
-    redirect: '/mobile-info-management/index',
+    redirect: '/computer-info-management/index',
     children: [
       {
         path: 'index',
-        component: () => import('@/views/mobile-info-management/index.vue'),
+        component: () => import('@/views/computer-info-management/index.vue'),
         name: 'MaintainInfoManagement',
-        meta: { title: '手机信息管理', icon: 'dashboard' }
+        meta: { title: '电脑信息管理', icon: 'dashboard' }
       }
     ]
   }, {
