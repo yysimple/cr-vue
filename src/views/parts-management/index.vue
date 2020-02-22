@@ -11,6 +11,11 @@
       <el-table-column align="center" prop="price" label="价格" />
       <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
+      <el-table-column align="center" min-width="120" label="图片">
+        <template slot-scope="{ row }">
+          <img :src="row.url" alt="" style="width: 106px">
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="操作" width="50" fixed="right">
         <template slot-scope="{row}">
           <el-link :underline="false" type="primary" title="使用零件" @click="handleUsed(row)"><i class="el-icon-thumb" /></el-link>

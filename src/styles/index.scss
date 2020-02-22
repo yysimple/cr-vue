@@ -70,12 +70,20 @@ div:focus {
   float: left;
 }
 
+.fz-16 {
+  font-size: 16px;
+}
+
 .pr-5 {
   padding-right: 5px;
 }
 
 .pl-5 {
   padding-left: 5px;
+}
+
+.pl-15 {
+  padding-left: 15px;
 }
 
 .block {
@@ -140,6 +148,12 @@ aside {
 
 .text-center {
   text-align: center
+}
+
+.flex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .page-header {

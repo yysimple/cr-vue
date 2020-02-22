@@ -41,15 +41,15 @@ export const userRoutes = [
       }
     ]
   }, {
-    path: '/maintain-info-management',
+    path: '/order-management',
     component: Layout,
-    redirect: '/maintain-info-management/index',
+    redirect: '/order-management/index',
     children: [
       {
         path: 'index',
-        component: () => import('@/views/maintain-info-management/index.vue'),
-        name: 'MaintainInfoManagement',
-        meta: { title: '维修信息管理', icon: 'dashboard' }
+        component: () => import('@/views/order-management/index.vue'),
+        name: 'OrderManagement',
+        meta: { title: '维修订单管理', icon: 'dashboard' }
       }
     ]
   }, {
@@ -62,6 +62,18 @@ export const userRoutes = [
         component: () => import('@/views/computer-info-management/index.vue'),
         name: 'ComputerInfoManagement',
         meta: { title: '电脑信息管理', icon: 'dashboard' }
+      }
+    ]
+  }, {
+    path: '/person-info-management',
+    component: Layout,
+    redirect: '/person-info-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/person-info-management/index.vue'),
+        name: 'PersonInfoManagement',
+        meta: { title: '个人信息管理', icon: 'dashboard' }
       }
     ]
   }

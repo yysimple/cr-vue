@@ -11,6 +11,11 @@
       <el-table-column align="center" prop="model" label="电脑型号" />
       <el-table-column align="center" prop="price" label="电脑价格" />
       <el-table-column align="center" prop="remark" label="描述" />
+      <el-table-column align="center" min-width="120" label="图片">
+        <template slot-scope="{ row }">
+          <img :src="row.url" alt="" style="width: 106px">
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="{ row }">
           <span>{{ ['卖出', '未卖出'][row.status] }}</span>
@@ -34,11 +39,11 @@
           <el-col :span="10">
             <el-form-item label="电脑编号">
               <el-select v-model="form.computerNo">
-                <el-option label="546789zzzx" value="546789zzzx"></el-option>
-                <el-option label="23dwd23131" value="23dwd23131"></el-option>
-                <el-option label="zs2222fsfs" value="zs2222fsfs"></el-option>
-                <el-option label="lxxx" value="lxxx"></el-option>
-                <el-option label="lxxx" value="lxxx"></el-option>
+                <el-option label="546789zzzx" value="546789zzzx" />
+                <el-option label="23dwd23131" value="23dwd23131" />
+                <el-option label="zs2222fsfs" value="zs2222fsfs" />
+                <el-option label="lxxx" value="lxxx" />
+                <el-option label="lxxx" value="lxxx" />
               </el-select>
             </el-form-item>
             <el-form-item label="电脑品牌">

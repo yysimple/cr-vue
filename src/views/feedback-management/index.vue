@@ -13,6 +13,11 @@
           <span>{{ ['未回答', '已答复'][row.status] }}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" min-width="120" label="图片">
+        <template slot-scope="{ row }">
+          <img :src="row.url" alt="" style="width: 106px">
+        </template>
+      </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
       <el-table-column align="center" label="操作" width="90" fixed="right">
@@ -137,7 +142,7 @@ export default {
       const type = this.dialogType
       try {
         if (type === 'add') {
-          this.form.userId = this.user.id
+          this.form.userId = this.user.user.id
           await apiAddQuestion(this.form)
         } else {
           await apiAddAnswer(this.form)

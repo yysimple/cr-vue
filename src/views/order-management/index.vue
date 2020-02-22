@@ -1,7 +1,7 @@
 <!--订单管理-->
 <template>
   <div class="order-management app-container">
-    <div v-if="user.role !== 'user'" class="filter-container">
+    <div v-if="user.role === 'user'" class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
@@ -16,10 +16,10 @@
       </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
-      <el-table-column align="center" label="操作" width="90" fixed="right">
+      <el-table-column v-if="user.role === 'admin'" align="center" label="操作" width="90" fixed="right">
         <template slot-scope="{row}">
-<!--          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>-->
-          <el-link :underline="false" type="primary" title="处理订单" @click="handleChangeStatus(row)"><i class="el-icon-magic-stick" /></el-link>
+          <!--          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>-->
+          <el-link :underline="false" type="primary" title="处理订单" @click="handleChangeStatus(row)"><i class="el-icon-document-checked" /></el-link>
           <el-divider direction="vertical" />
           <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
         </template>
