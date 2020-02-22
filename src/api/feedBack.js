@@ -6,6 +6,13 @@ export const apiAllFeedback = () => {
   return service.get(url)
 }
 
+// 获取用户意见回馈
+export const apiAllFeedbackByUserId = param => {
+  const { id } = param
+  const url = `feedback/findAllFeedbackByUserId?userId=${id}`
+  return service.get(url)
+}
+
 // 添加问题
 export const apiAddQuestion = param => {
   const url = `feedback/addQuestion`

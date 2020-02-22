@@ -1,7 +1,7 @@
 <!--留言回复-->
 <template>
   <div class="feedback-management app-container">
-    <div class="filter-container">
+    <div class="filter-container" v-if="userRole === 'user'">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
@@ -20,7 +20,7 @@
       </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
-      <el-table-column align="center" label="操作" width="90" fixed="right">
+      <el-table-column align="center" label="操作" width="90" fixed="right" v-if="userRole === 'admin'">
         <template slot-scope="{row}">
           <el-link :underline="false" type="primary" title="回复" @click="openDialog('edit', row)"><i class="el-icon-edit" /></el-link>
           <el-divider direction="vertical" />
@@ -66,7 +66,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { apiAllFeedback, apiAddQuestion, apiAddAnswer, apiDeleteFeedback } from '@/api/feedBack'
+import { apiAllFeedback, apiAddQuestion, apiAddAnswer, apiDeleteFeedback, apiAllFeedbackByUserId } from '@/api/feedBack'
 export default {
   name: 'FeedbackManagement',
   data() {
@@ -88,7 +88,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    userRole() {
+      return this.user.role
+    }
   },
   mounted() {
     this.init()
@@ -98,7 +101,11 @@ export default {
     async init() {
       this.tableLoading = true
       try {
-        this.tableData = await apiAllFeedback()
+        if(this.userRole === 'admin') {
+          this.tableData = await apiAllFeedback()
+        } else {
+          this.tableData = await apiAllFeedbackByUserId(this.user.user)
+        }
         this.tableLoading = false
       } catch (e) {
         this.$message.error(`${e.msg}`)

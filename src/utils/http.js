@@ -33,7 +33,7 @@ export const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use((config) => {
   NProgress.start()
-  // if (sessionStorage.token) config.headers.token = sessionStorage.token
+  if (sessionStorage.token) config.headers.token = sessionStorage.token
   // if (sessionStorage.token)
   // config.headers.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjE0MzU3Mzc4MDA3NDM3MzEyIn0.9h8QR05gfTWDmrthaxslMfReD91bHzCGwkStvocgryI'
   return config

@@ -126,6 +126,7 @@ export default {
             setTimeout(() => {
               this.setUserInfo()
               this.$store.dispatch('user/setUser', Object.assign(userData, this.loginForm))
+              sessionStorage.setItem("token", userData.token);
               this.$message({
                 message: '登录成功',
                 type: 'success'

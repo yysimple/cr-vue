@@ -76,6 +76,18 @@ export const userRoutes = [
         meta: { title: '个人信息管理', icon: 'dashboard' }
       }
     ]
+  }, {
+    path: '/feedback-management',
+    component: Layout,
+    redirect: '/feedback-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/feedback-management/index.vue'),
+        name: 'FeedbackManagement',
+        meta: { title: '留言管理', icon: 'dashboard' }
+      }
+    ]
   }
 ]
 
