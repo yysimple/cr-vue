@@ -23,7 +23,7 @@
       <!--      </el-table-column>-->
     </el-table>
 
-    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
+    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="50px" style="margin: 0 30px;">
         <el-form-item label="编号">
           <el-input v-model="form.troubleNo" placeholder="请输入编号" />

@@ -29,13 +29,22 @@
     </el-table>
 
     <!--    添加/编辑用户-->
-    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
+    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="50px" style="margin: 0 30px;">
         <el-form-item label="账号">
           <el-input v-model="form.username" placeholder="请输入账号" />
         </el-form-item>
-        <el-form-item v-if="dialogType === 'add'" label="密码">
+        <el-form-item label="密码">
           <el-input v-model="form.password" type="password" placeholder="请输入密码" />
+        </el-form-item>
+        <el-form-item v-if="dialogType !== 'add'" label="启用">
+          <el-switch
+            v-model="form.status"
+            active-color="#13ce66"
+            inactive-color="#ccc"
+            :active-value="1"
+            :inactive-value="0"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" align="center">
@@ -66,7 +75,8 @@ export default {
       dialogVisible: false,
       form: {
         username: '',
-        password: ''
+        password: '',
+        role: ''
       }
     }
   },
@@ -95,8 +105,8 @@ export default {
           password: ''
         }
       } else {
-        const { id, username, password } = data
-        this.form = { id, username, password }
+        const { username, password, status } = data
+        this.form = { username, password, status }
       }
       this.dialogVisible = true
     },

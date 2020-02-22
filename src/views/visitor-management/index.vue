@@ -7,7 +7,7 @@
       <el-table-column align="center" width="150" prop="createTime" label="访问时间" />
     </el-table>
 
-    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
+    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="50px" style="margin: 0 30px;">
         <el-form-item label="k1">
           <el-input v-model="form.key" />

@@ -140,6 +140,18 @@ export const adminRoutes = [
         meta: { title: '访客管理', icon: 'dashboard' }
       }
     ]
+  }, {
+    path: '/feedback-management',
+    component: Layout,
+    redirect: '/feedback-management/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/feedback-management/index.vue'),
+        name: 'FeedbackManagement',
+        meta: { title: '留言回复', icon: 'dashboard' }
+      }
+    ]
   }
 ]
 

@@ -16,9 +16,9 @@ export const apiAddUser = param => {
 
 // 编辑用户
 export const apiEditUser = param => {
-  const { username } = param
-  const url = `user/updateUser?username=${username}`
-  return service.post(url)
+  // const { username } = param
+  const url = `user/updateUser`
+  return service.post(url, param)
 }
 
 // 删除用户

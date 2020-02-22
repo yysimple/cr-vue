@@ -1,37 +1,40 @@
-<!--零件管理-->
+<!--留言回复-->
 <template>
-  <div class="parts-management app-container">
+  <div class="feedback-management app-container">
     <div class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="序号" />
-      <el-table-column align="center" prop="num" label="数量(个)" />
-      <el-table-column align="center" prop="partName" label="零件名称" />
-      <el-table-column align="center" prop="price" label="价格" />
+      <el-table-column align="center" min-width="150" prop="question" label="问题描述" />
+      <el-table-column align="center" min-width="150" prop="answer" label="回复" />
+      <el-table-column align="center" label="状态">
+        <template slot-scope="{ row }">
+          <span>{{ ['未回答', '已答复'][row.status] }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
-      <el-table-column align="center" label="操作" width="50" fixed="right">
+      <el-table-column align="center" label="操作" width="90" fixed="right">
         <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="使用零件" @click="handleUsed(row)"><i class="el-icon-thumb" /></el-link>
+          <el-link :underline="false" type="primary" title="回复" @click="openDialog('edit', row)"><i class="el-icon-edit" /></el-link>
+          <el-divider direction="vertical" />
+          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
-      <el-form label-width="50px" style="margin: 0 30px;">
-        <el-form-item label="个数">
-          <el-input v-model="form.num" placeholder="请输入个数" />
+      <el-form label-width="100px" style="margin: 0 30px;">
+        <el-form-item v-if="dialogType === 'add'" label="问题描述">
+          <el-input v-model="form.question" type="textarea" rows="3" placeholder="请输入问题描述" />
         </el-form-item>
-        <el-form-item label="名称">
-          <el-input v-model="form.partName" placeholder="请输入名称" />
+        <el-form-item v-if="dialogType === 'edit'" label="回复信息">
+          <el-input v-model="form.answer" type="textarea" rows="3" placeholder="请输入回复信息" />
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input v-model="form.price" placeholder="请输入价格" />
-        </el-form-item>
-        <el-form-item label="图片">
+        <el-form-item v-if="dialogType === 'add'" label="图片">
           <el-upload
-            action="http://www.wcx412.xyz:6543/file/partFileUpload"
+            action="http://www.wcx412.xyz:6543/file/feedBackFilesUpload"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
@@ -40,7 +43,7 @@
             <i class="el-icon-plus" />
           </el-upload>
           <el-dialog :visible.sync="imgVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
+            <img width="100%" :src="form.url" alt="">
           </el-dialog>
         </el-form-item>
       </el-form>
@@ -57,28 +60,30 @@
 </template>
 
 <script>
-import { apiGetParts, apiAddPart, apiUsePart } from '@/api/parts'
+import { mapGetters } from 'vuex'
+import { apiAllFeedback, apiAddQuestion, apiAddAnswer, apiDeleteFeedback } from '@/api/feedBack'
 export default {
-  name: 'PartsManagement',
+  name: 'FeedbackManagement',
   data() {
     return {
       tableData: [],
       tableLoading: false,
       dialogType: 'add',
       dialogTitleMap: {
-        'add': '添加零件信息',
-        'edit': '编辑零件信息'
+        'add': '添加问题',
+        'edit': '回复'
       },
       dialogVisible: false,
       form: {
-        num: '',
-        partName: '',
-        price: '',
+        question: '',
+        answer: '',
         url: ''
       },
-      dialogImageUrl: '',
       imgVisible: false
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   mounted() {
     this.init()
@@ -88,7 +93,7 @@ export default {
     async init() {
       this.tableLoading = true
       try {
-        this.tableData = await apiGetParts()
+        this.tableData = await apiAllFeedback()
         this.tableLoading = false
       } catch (e) {
         this.$message.error(`${e.msg}`)
@@ -101,25 +106,41 @@ export default {
       this.dialogType = type
       if (type === 'add') {
         this.form = {
-          num: '',
-          partName: '',
-          price: '',
+          question: '',
+          answer: '',
           url: ''
         }
       } else {
-        this.form = data
+        const { id, question, answer, url } = data
+        this.form = { id, question, answer, url }
       }
       this.dialogVisible = true
     },
 
-    // 保存零件信息
+    // 删除故障信息
+    handleDelete(data) {
+      const option = { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }
+      this.$confirm('确定要删除?', '提示', option).then(async() => {
+        try {
+          await apiDeleteFeedback(data)
+          this.$message({ message: '保存成功', type: 'success' })
+          this.init()
+        } catch (e) {
+          this.dialogVisible = false
+          this.$message.error(`${e.msg}`)
+        }
+      }).catch(() => {})
+    },
+
+    // 保存故障信息
     async handleSave() {
       const type = this.dialogType
       try {
         if (type === 'add') {
-          await apiAddPart(this.form)
+          this.form.userId = this.user.id
+          await apiAddQuestion(this.form)
         } else {
-          await apiUsePart(this.form)
+          await apiAddAnswer(this.form)
         }
         this.$message({ message: '保存成功', type: 'success' })
         this.dialogVisible = false
@@ -128,19 +149,6 @@ export default {
         this.dialogVisible = false
         this.$message.error(`${e.msg}`)
       }
-    },
-
-    // 使用零件
-    handleUsed(data) {
-      const option = { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }
-      this.$confirm('使用该零件?', '提示', option).then(async() => {
-        try {
-          await apiUsePart(data)
-          this.$message({ message: '使用成功', type: 'success' })
-        } catch (e) {
-          this.$message.error(`${e.msg}`)
-        }
-      })
     },
 
     handleGetPic(file) {
@@ -153,7 +161,7 @@ export default {
     },
 
     handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url
+      // this.form.url = file.url
       this.imgVisible = true
     }
   }

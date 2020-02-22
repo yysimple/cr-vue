@@ -1,7 +1,7 @@
 <!--电脑信息管理-->
 <template>
   <div class="computer-info-management app-container">
-    <div v-if="user.role !== 'admin'" class="filter-container">
+    <div class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
@@ -33,7 +33,13 @@
         <el-row type="flex" justify="space-between" style="width: 100%">
           <el-col :span="10">
             <el-form-item label="电脑编号">
-              <el-input v-model="form.computerNo" placeholder="请输入电脑编号" />
+              <el-select v-model="form.computerNo">
+                <el-option label="546789zzzx" value="546789zzzx"></el-option>
+                <el-option label="23dwd23131" value="23dwd23131"></el-option>
+                <el-option label="zs2222fsfs" value="zs2222fsfs"></el-option>
+                <el-option label="lxxx" value="lxxx"></el-option>
+                <el-option label="lxxx" value="lxxx"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="电脑品牌">
               <el-input v-model="form.brand" placeholder="请输入电脑品牌" />
@@ -60,7 +66,7 @@
                 <i class="el-icon-plus" />
               </el-upload>
               <el-dialog :visible.sync="imgVisible">
-                <img width="100%" :src="dialogImageUrl" alt="">
+                <img width="100%" :src="form.url" alt="">
               </el-dialog>
             </el-form-item>
           </el-col>
@@ -177,7 +183,7 @@ export default {
 
     handleGetPic(file) {
       this.form.url = file
-      console.log(file)
+      console.log(this.form.url)
     },
 
     handleRemove(file, fileList) {
@@ -196,6 +202,7 @@ export default {
   .computer-info-management {
     .el-dialog {
       min-width: 550px !important;
+      max-width: 684px !important;
     }
   }
 </style>

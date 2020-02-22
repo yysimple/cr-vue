@@ -22,7 +22,7 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect">
         <div class="avatar-wrapper">
           <div class="user-avatar">
-            <el-avatar shape="square" size="small" :src="squareUrl"></el-avatar>
+            <el-avatar shape="square" size="small" :src="squareUrl" />
             <span class="pl-5">{{ user.username }}</span>
           </div>
         </div>
@@ -50,7 +50,7 @@
       </el-dropdown>
     </div>
 
-    <el-dialog title="编辑用户信息" :visible.sync="dialogVisible" :modal="false">
+    <el-dialog title="编辑用户信息" :visible.sync="dialogVisible" :modal="false" width="30%">
       <el-form ref="dialogRef" :model="dialogForm" :rules="rules" label-position="right" label-width="60px" style="margin: 0 20px">
         <el-form-item label="账户" prop="username">
           <el-input v-model="dialogForm.username" placeholder="请填写账户" />
@@ -96,7 +96,7 @@ export default {
   },
   data() {
     return {
-      squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+      squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
       systemMode: process.env.VUE_APP_ENV,
       dialogVisible: false,
       dialogForm: {
@@ -162,6 +162,13 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .navbar {
+    .el-dialog__wrapper {
+      background: rgba(0,0,0,.5);
+    }
+  }
+</style>
 <style lang="scss" scoped>
 .navbar {
   height: 50px;

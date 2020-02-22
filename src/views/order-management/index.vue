@@ -18,14 +18,15 @@
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
       <el-table-column align="center" label="操作" width="90" fixed="right">
         <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
+<!--          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>-->
+          <el-link :underline="false" type="primary" title="处理订单" @click="handleChangeStatus(row)"><i class="el-icon-magic-stick" /></el-link>
           <el-divider direction="vertical" />
           <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
+    <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="70px" style="margin: 0 30px;">
         <el-form-item label="联系人">
           <el-input v-model="form.contact" placeholder="请输入联系人" />
@@ -136,6 +137,23 @@ export default {
         this.dialogVisible = false
         this.$message.error(`${e.msg}`)
       }
+    },
+
+    // 处理订单
+    handleChangeStatus(data) {
+      const option = { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }
+      this.$confirm('处理该订单?', '提示', option).then(async() => {
+        try {
+          console.log(data.status)
+          data.status = 1
+          await apiEditOrderStatus(data)
+          this.$message({ message: '处理成功', type: 'success' })
+          this.init()
+        } catch (e) {
+          // this.$message.error(`${e.msg}`)
+          this.$message.error(`${e}`)
+        }
+      })
     }
   }
 }
