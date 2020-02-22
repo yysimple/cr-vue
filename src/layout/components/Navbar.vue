@@ -36,10 +36,10 @@
               </div>
             </div>
             <div class="user-menu">
-              <div class="menu-item" @click="openDialog(user)">
-                <svg-icon icon-class="edit-user" style="margin-bottom: 2px" />
-                编辑用户信息
-              </div>
+<!--              <div class="menu-item" @click="openDialog(user)">-->
+<!--                <svg-icon icon-class="edit-user" style="margin-bottom: 2px" />-->
+<!--                编辑用户信息-->
+<!--              </div>-->
               <div class="menu-item" @click="logout">
                 <svg-icon icon-class="out-login" />
                 退出登录
