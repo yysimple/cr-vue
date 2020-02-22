@@ -47,6 +47,7 @@ service.interceptors.request.use((config) => {
 // 响应拦截器
 service.interceptors.response.use((response) => {
   const resData = response.data
+  console.log(resData)
   NProgress.done()
   if (resData.status < 200 || resData.status >= 300) {
     // 处理http错误，抛到业务代码

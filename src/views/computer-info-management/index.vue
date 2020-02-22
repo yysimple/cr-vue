@@ -1,7 +1,7 @@
 <!--电脑信息管理-->
 <template>
   <div class="computer-info-management app-container">
-    <div class="filter-container">
+    <div v-if="user.role !== 'admin'" class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
@@ -18,13 +18,13 @@
       </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="卖出时间" />
       <el-table-column align="center" width="150" prop="createTime" label="进货时间" />
-      <el-table-column align="center" label="操作" width="90" fixed="right">
-        <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
-          <el-divider direction="vertical" />
-          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column align="center" label="操作" width="90" fixed="right">-->
+      <!--        <template slot-scope="{row}">-->
+      <!--          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>-->
+      <!--          <el-divider direction="vertical" />-->
+      <!--          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
     </el-table>
 
     <!--    添加/编辑 电脑-->
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { apiGetComputers, apiAddComputer, apiEditComputer, apiDeleteComputer } from '@/api/computer'
 export default {
   name: 'ComputerInfoManagement',
@@ -104,6 +105,9 @@ export default {
       imgVisible: false
     }
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   mounted() {
     this.init()
   },
@@ -115,7 +119,7 @@ export default {
         this.tableData = await apiGetComputers()
         this.tableLoading = false
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.tableLoading = false
       }
     },
@@ -147,7 +151,7 @@ export default {
           this.$message({ message: '保存成功', type: 'success' })
           this.init()
         } catch (e) {
-          this.$message.error(`${e}`)
+          this.$message.error(`${e.msg}`)
           this.dialogVisible = false
         }
       }).catch(() => {})
@@ -166,7 +170,7 @@ export default {
         this.dialogVisible = false
         this.init()
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.dialogVisible = false
       }
     },

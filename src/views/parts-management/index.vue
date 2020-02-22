@@ -13,7 +13,7 @@
       <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
       <el-table-column align="center" label="操作" width="50" fixed="right">
         <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
+          <el-link :underline="false" type="primary" title="使用零件" @click="handleUsed(row)"><i class="el-icon-thumb" /></el-link>
         </template>
       </el-table-column>
     </el-table>
@@ -31,10 +31,11 @@
         </el-form-item>
         <el-form-item label="图片">
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://www.wcx412.xyz:6543/file/partFileUpload"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
+            :on-success="handleGetPic"
           >
             <i class="el-icon-plus" />
           </el-upload>
@@ -90,7 +91,7 @@ export default {
         this.tableData = await apiGetParts()
         this.tableLoading = false
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.tableLoading = false
       }
     },
@@ -118,15 +119,33 @@ export default {
         if (type === 'add') {
           await apiAddPart(this.form)
         } else {
-          // await apiEditTroubleStatus(this.form)
+          await apiUsePart(this.form)
         }
         this.$message({ message: '保存成功', type: 'success' })
         this.dialogVisible = false
         this.init()
       } catch (e) {
         this.dialogVisible = false
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
       }
+    },
+
+    // 使用零件
+    handleUsed(data) {
+      const option = { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }
+      this.$confirm('使用该零件?', '提示', option).then(async() => {
+        try {
+          await apiUsePart(data)
+          this.$message({ message: '使用成功', type: 'success' })
+        } catch (e) {
+          this.$message.error(`${e.msg}`)
+        }
+      })
+    },
+
+    handleGetPic(file) {
+      this.form.url = file
+      console.log(file)
     },
 
     handleRemove(file, fileList) {

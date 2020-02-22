@@ -14,15 +14,13 @@
         </template>
       </el-table-column>
       <el-table-column align="center" prop="remark" min-width="100" label="备注" />
-      <el-table-column align="center" width="150" prop="updateTime" label="更新时间" />
-      <el-table-column align="center" width="150" prop="createTime" label="创建时间" />
-      <el-table-column align="center" label="操作" width="90" fixed="right">
-        <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>
-          <el-divider direction="vertical" />
-          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column align="center" label="操作" width="90" fixed="right">-->
+      <!--        <template slot-scope="{row}">-->
+      <!--          <el-link :underline="false" type="primary" title="编辑" @click="openDialog('edit', row)"><i class="el-icon-edit-outline" /></el-link>-->
+      <!--          <el-divider direction="vertical" />-->
+      <!--          <el-link :underline="false" type="danger" title="删除" @click="handleDelete(row)"><i class="el-icon-delete" /></el-link>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
     </el-table>
 
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
@@ -88,7 +86,7 @@ export default {
         this.tableData = await apiGetTroubles()
         this.tableLoading = false
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.tableLoading = false
       }
     },
@@ -120,7 +118,7 @@ export default {
           this.init()
         } catch (e) {
           this.dialogVisible = false
-          this.$message.error(`${e}`)
+          this.$message.error(`${e.msg}`)
         }
       }).catch(() => {})
     },
@@ -139,7 +137,7 @@ export default {
         this.init()
       } catch (e) {
         this.dialogVisible = false
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
       }
     }
   }

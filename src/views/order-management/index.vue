@@ -1,9 +1,9 @@
 <!--订单管理-->
 <template>
   <div class="order-management app-container">
-    <!--    <div class="filter-container">-->
-    <!--      <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>-->
-    <!--    </div>-->
+    <div v-if="user.role !== 'user'" class="filter-container">
+      <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
+    </div>
     <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="序号" />
       <el-table-column align="center" prop="contact" label="联系人" />
@@ -26,15 +26,15 @@
     </el-table>
 
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible">
-      <el-form label-width="50px" style="margin: 0 30px;">
+      <el-form label-width="70px" style="margin: 0 30px;">
         <el-form-item label="联系人">
-          <el-input v-model="form.contact" placaholder="请输入联系人" />
+          <el-input v-model="form.contact" placeholder="请输入联系人" />
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input v-model="form.contactTel" placaholder="请输入联系电话" />
+          <el-input v-model="form.contactTel" placeholder="请输入联系电话" />
         </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="form.remark" placaholder="请输入备注" />
+          <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" align="center">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { apiGetOrders, apiAddOrder, apiEditOrderStatus, apiDeleteOrder } from '@/api/order'
 export default {
   name: 'OrderManagement',
@@ -70,6 +71,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   mounted() {
     this.init()
   },
@@ -81,7 +85,7 @@ export default {
         this.tableData = await apiGetOrders()
         this.tableLoading = false
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.tableLoading = false
       }
     },
@@ -111,7 +115,7 @@ export default {
           this.init()
         } catch (e) {
           this.dialogVisible = false
-          this.$message.error(`${e}`)
+          this.$message.error(`${e.msg}`)
         }
       }).catch(() => {})
     },
@@ -130,7 +134,7 @@ export default {
         this.init()
       } catch (e) {
         this.dialogVisible = false
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
       }
     }
   }

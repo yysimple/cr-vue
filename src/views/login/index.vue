@@ -134,7 +134,7 @@ export default {
               this.loading = false
             }, 1.5 * 1000)
           } catch (e) {
-            this.$message.error(`${e}`)
+            this.$message.error(`${e.msg}`)
             this.loading = false
           }
         } else {

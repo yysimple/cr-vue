@@ -7,10 +7,10 @@ export const apiGetOrders = () => {
 }
 
 // 添加订单
-// export const apiAddOrder = param => {
-//   const url = `trouble/addOrderInfo`
-//   return service.post(url, param)
-// }
+export const apiAddOrder = param => {
+  const url = `order/addOrder`
+  return service.post(url, param)
+}
 
 // 编辑订单状态
 export const apiEditOrderStatus = param => {

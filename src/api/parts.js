@@ -14,8 +14,8 @@ export const apiAddPart = param => {
 
 // 使用零件
 export const apiUsePart = param => {
-  const { partId } = param
-  const url = `part/usePart?partId=${partId}`
+  const { id } = param
+  const url = `part/usePart?partId=${id}`
   return service.post(url)
 }
 

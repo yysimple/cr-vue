@@ -54,7 +54,7 @@ export default {
         this.tableData = await apiGetVisitors()
         this.tableLoading = false
       } catch (e) {
-        this.$message.error(`${e}`)
+        this.$message.error(`${e.msg}`)
         this.tableLoading = false
       }
     },
