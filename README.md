@@ -1,3 +1,6 @@
+#预览
+http://www.wcx412.xyz/#/
+
 # 安装依赖
 npm install
 
