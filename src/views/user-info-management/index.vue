@@ -4,7 +4,7 @@
     <div class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
-    <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading="tableLoading" :data="tableData" fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="序号" />
       <el-table-column align="center" prop="username" label="账号" />
       <el-table-column align="center" label="角色">

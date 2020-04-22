@@ -31,8 +31,8 @@
             <div class="user-info">
               <div class="avatar"><el-avatar :size="50" :src="squareUrl" /></div>
               <div class="detail">
-                <p class="fz-14">{{ user.username }}</p>
-                <span class="fz-12 remarks">{{ user.role | typeFilter }}</span>
+                <span class="fz-14">{{ user.username }}</span><br>
+                <span class="fz-10 remarks">{{ user.role | typeFilter }}</span>
               </div>
             </div>
             <div class="user-menu">

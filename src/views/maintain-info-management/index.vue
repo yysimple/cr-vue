@@ -4,7 +4,7 @@
     <div class="filter-container">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
-    <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading="tableLoading" :data="tableData" fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>

@@ -14,18 +14,27 @@
           </el-form-item>
           <el-form-item label="角色" prop="role">
             <el-select v-model="loginForm.role" placeholder="请选择">
-              <el-option
-                v-for="item in roleOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
+                <el-option
+                        v-for="item in roleOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                />
+              </el-select>
           </el-form-item>
-          <div style="overflow: hidden; margin-bottom: 20px">
+          <div class="form-remark">
             <el-checkbox v-model="remember" class="fl">记住密码</el-checkbox>
+            <router-link to="register" class="fz-10 register remarks">注册</router-link>
+<!--            <el-link :underline="false" class="fz-10 register remarks">注册</el-link>-->
           </div>
-          <el-button :loading="loading" type="primary" size="medium" round style="width: 100%" @click.native.prevent="handleLogin">登录</el-button>
+          <el-button
+                  :loading="loading"
+                  type="primary"
+                  size="medium"
+                  round
+                  style="width: 100%"
+                  @click.native.prevent="handleLogin"
+          >登录</el-button>
         </el-form>
       </div>
     </start-layout>
@@ -222,7 +231,7 @@ export default {
         width: 250px;
         margin: auto;
         padding: 10px 0 20px 0;
-
+        position: relative;
         .code {
           width: 30%;
           height: 28px;
@@ -233,6 +242,15 @@ export default {
             height: 100%;
           }
         }
+        .form-remark {
+          overflow: hidden; margin-bottom: 20px;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        /*.register {*/
+        /*  position: absolute;*/
+        /*  bottom: 0;*/
+        /*  right: 0;*/
+        /*}*/
       }
     }
   }

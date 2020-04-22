@@ -1,10 +1,10 @@
 <!--电脑信息管理-->
 <template>
   <div class="computer-info-management app-container">
-    <div class="filter-container">
+    <div class="filter-container" v-if="user.role === 'admin'">
       <el-button class="filter-item" type="primary" @click="openDialog('add')">添加</el-button>
     </div>
-    <el-table v-loading="tableLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading="tableLoading" :data="tableData" fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="序号" />
       <el-table-column align="center" prop="computerNo" label="电脑编号" min-width="100" />
       <el-table-column align="center" prop="brand" label="电脑品牌" />
@@ -38,13 +38,7 @@
         <el-row type="flex" justify="space-between" style="width: 100%">
           <el-col :span="10">
             <el-form-item label="电脑编号">
-              <el-select v-model="form.computerNo">
-                <el-option label="546789zzzx" value="546789zzzx" />
-                <el-option label="23dwd23131" value="23dwd23131" />
-                <el-option label="zs2222fsfs" value="zs2222fsfs" />
-                <el-option label="lxxx" value="lxxx" />
-                <el-option label="lxxx" value="lxxx" />
-              </el-select>
+              <el-input v-model="form.computerNo" placeholder="请输入电脑编号" />
             </el-form-item>
             <el-form-item label="电脑品牌">
               <el-input v-model="form.brand" placeholder="请输入电脑品牌" />
@@ -104,6 +98,7 @@ export default {
         'edit': '编辑电脑'
       },
       dialogVisible: false,
+      detailVisible: false,
       form: {
         computerNo: '',
         brand: '',
