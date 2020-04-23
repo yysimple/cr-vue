@@ -14,8 +14,8 @@ export const apiAddOrder = param => {
 
 // 编辑订单状态
 export const apiEditOrderStatus = param => {
-  const { status } = param
-  const url = `order/changeStatus?status=${status}`
+  const { status, id } = param
+  const url = `order/changeStatus?status=${status}&orderId=${id}`
   return service.post(url)
 }
 
@@ -27,8 +27,8 @@ export const apiEditOrder = param => {
 
 // 删除订单
 export const apiDeleteOrder = param => {
-  const { orderId } = param
-  const url = `order/deleteOrderById?orderId=${orderId}`
+  const { id } = param
+  const url = `order/deleteOrderById?orderId=${id}`
   return service.post(url)
 }
 
