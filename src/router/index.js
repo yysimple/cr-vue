@@ -42,7 +42,7 @@ export const userRoutes = [
         path: 'index',
         component: () => import('@/views/notification-management/index.vue'),
         name: 'NotificationManagement',
-        meta: { title: '通知管理', icon: 'dashboard' }
+        meta: { title: '通知管理', icon: '通知_' }
       }
     ]
   }, {
@@ -54,14 +54,14 @@ export const userRoutes = [
         path: 'index',
         component: () => import('@/views/order-management/index.vue'),
         name: 'OrderManagement',
-        meta: { title: '维修订单管理', icon: 'dashboard' }
+        meta: { title: '维修订单管理', icon: '订单' }
       }
     ]
   }, {
     path: '/computer-info-management',
     component: Layout,
     redirect: '/computer-info-management/index',
-    meta: { title: '电脑信息管理', icon: 'dashboard' },
+    meta: { title: '电脑信息管理', icon: '电脑' },
     children: [
       {
         path: 'index',
@@ -85,7 +85,7 @@ export const userRoutes = [
         path: 'index',
         component: () => import('@/views/person-info-management/index.vue'),
         name: 'PersonInfoManagement',
-        meta: { title: '个人信息管理', icon: 'dashboard' }
+        meta: { title: '个人信息管理', icon: '个人' }
       }
     ]
   }, {
@@ -97,7 +97,7 @@ export const userRoutes = [
         path: 'index',
         component: () => import('@/views/feedback-management/index.vue'),
         name: 'FeedbackManagement',
-        meta: { title: '留言管理', icon: 'dashboard' }
+        meta: { title: '留言管理', icon: '留言回复' }
       }
     ]
   }
@@ -113,7 +113,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/user-info-management/index.vue'),
         name: 'UserInfoManagement',
-        meta: { title: '用户信息', icon: 'dashboard' }
+        meta: { title: '用户信息', icon: '用户信息' }
       }
     ]
   }, {
@@ -125,7 +125,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/computer-info-management/index.vue'),
         name: 'MaintainInfoManagement',
-        meta: { title: '电脑信息管理', icon: 'dashboard' }
+        meta: { title: '电脑信息管理', icon: '电脑' }
       }
     ]
   }, {
@@ -137,7 +137,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/fault-info-management/index.vue'),
         name: 'FaultInfoManagement',
-        meta: { title: '故障信息管理', icon: 'dashboard' }
+        meta: { title: '故障信息管理', icon: '故障' }
       }
     ]
   }, {
@@ -149,7 +149,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/order-management/index.vue'),
         name: 'OrderManagement',
-        meta: { title: '维修订单管理', icon: 'dashboard' }
+        meta: { title: '维修订单管理', icon: '订单' }
       }
     ]
   }, {
@@ -161,7 +161,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/parts-management/index.vue'),
         name: 'PartsManagement',
-        meta: { title: '零件管理', icon: 'dashboard' }
+        meta: { title: '零件管理', icon: '零件' }
       }
     ]
   }, {
@@ -173,7 +173,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/visitor-management/index.vue'),
         name: 'VisitorManagement',
-        meta: { title: '访客管理', icon: 'dashboard' }
+        meta: { title: '访客管理', icon: '访客' }
       }
     ]
   }, {
@@ -185,7 +185,7 @@ export const adminRoutes = [
         path: 'index',
         component: () => import('@/views/feedback-management/index.vue'),
         name: 'FeedbackManagement',
-        meta: { title: '留言回复', icon: 'dashboard' }
+        meta: { title: '留言回复', icon: '留言回复' }
       }
     ]
   }
