@@ -6,6 +6,7 @@
     </div>
     <el-table v-loading="tableLoading" :data="tableData" fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="序号" />
+      <el-table-column align="center" prop="computerInfoId" label="电脑编号" />
       <el-table-column align="center" prop="contact" label="联系人" />
       <el-table-column align="center" prop="contactTel" label="联系电话" />
       <el-table-column align="center" prop="remark" label="备注" />
@@ -26,8 +27,14 @@
       </el-table-column>
     </el-table>
 
+    <!--    添加订单-->
     <el-dialog :title="dialogTitleMap[dialogType]" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="70px" style="margin: 0 30px;">
+        <el-form-item label="电脑编号" prop="extendedDeviceType">
+          <el-select v-model="form.computerInfoId" placeholder="请选择电脑编号" style="width: 100%">
+            <el-option v-for="(i, j) in computerOptions" :key="j+'s'" :label="i.computerNo" :value="i.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="联系人">
           <el-input v-model="form.contact" placeholder="请输入联系人" />
         </el-form-item>
@@ -53,12 +60,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import { apiGetOrders, apiAddOrder, apiEditOrderStatus, apiDeleteOrder } from '@/api/order'
+import { apiGetComputersByUser } from '@/api/computer'
+
 export default {
   name: 'OrderManagement',
   data() {
     return {
       tableData: [],
       tableLoading: false,
+      computerOptions: [],
       dialogType: 'add',
       dialogTitleMap: {
         'add': '添加订单信息',
@@ -66,6 +76,7 @@ export default {
       },
       dialogVisible: false,
       form: {
+        computerInfoId: '',
         contact: '',
         contactTel: '',
         remark: ''
@@ -92,13 +103,19 @@ export default {
     },
 
     // 打开模态框
-    openDialog(type, data) {
+    async openDialog(type, data) {
       this.dialogType = type
       if (type === 'add') {
-        this.form = {
-          contact: '',
-          contactTel: '',
-          remark: ''
+        try {
+          this.computerOptions = await apiGetComputersByUser(this.user.user.id)
+          this.form = {
+            contact: '',
+            contactTel: '',
+            remark: '',
+            computerInfoId: ''
+          }
+        } catch (e) {
+          this.$message.error(`${e.msg}`)
         }
       } else {
         this.form = data

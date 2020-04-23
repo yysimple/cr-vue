@@ -1,9 +1,6 @@
 <!--电脑信息管理-->
 <template>
-  <div class="computer-info-management app-container">
-    <div v-if="user.role === 'admin'" class="filter-container">
-      <el-button class="filter-item" type="primary" @click="openDialog(false)">添加</el-button>
-    </div>
+  <div class="computer-user app-container">
     <el-table v-loading="tableLoading" :data="tableData" fit highlight-current-row style="width: 100%" @row-click="openDialog">
       <el-table-column type="index" align="center" label="序号" />
       <el-table-column align="center" prop="computerNo" label="电脑编号" min-width="100" />
@@ -23,11 +20,6 @@
       </el-table-column>
       <el-table-column align="center" width="150" prop="updateTime" label="卖出时间" />
       <el-table-column align="center" width="150" prop="createTime" label="进货时间" />
-      <el-table-column v-if="user.role !== 'admin'" align="center" label="操作" width="50" fixed="right">
-        <template slot-scope="{row}">
-          <el-link :underline="false" type="primary" title="编辑" @click.stop="handleShopping(row)"><i class="el-icon-shopping-cart-2" /></el-link>
-        </template>
-      </el-table-column>
     </el-table>
 
     <!--    添加/编辑 电脑-->
@@ -122,6 +114,7 @@ export default {
   name: 'ComputerInfoManagement',
   data() {
     return {
+      activeName: 'admin',
       tableData: [],
       tableLoading: false,
       dialogType: 'add',
@@ -154,7 +147,7 @@ export default {
     async init() {
       this.tableLoading = true
       try {
-        this.tableData = await apiGetComputers()
+        this.tableData = await apiGetComputersByUser(this.user.user.id)
         this.tableLoading = false
       } catch (e) {
         this.$message.error(`${e.msg}`)
@@ -251,11 +244,11 @@ export default {
 </script>
 
 <style lang="scss">
-  .computer-info-management {
-    .el-dialog {
-      min-width: 550px !important;
-      max-width: 684px !important;
+    .computer-user {
+        .el-dialog {
+            min-width: 550px !important;
+            max-width: 684px !important;
+        }
     }
-  }
 </style>
 

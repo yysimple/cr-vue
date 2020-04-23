@@ -26,8 +26,8 @@ const resError = (status) => {
 }
 
 export const service = axios.create({
-  // baseURL: 'http://www.wcx412.xyz:6543',
-  baseURL: 'http://192.168.1.177:6543',
+  baseURL: 'http://www.wcx412.xyz:6543',
+  // baseURL: 'http://192.168.1.177:6543',
   timeout: 30000
 })
 

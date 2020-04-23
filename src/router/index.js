@@ -61,12 +61,19 @@ export const userRoutes = [
     path: '/computer-info-management',
     component: Layout,
     redirect: '/computer-info-management/index',
+    meta: { title: '电脑信息管理', icon: 'dashboard' },
     children: [
       {
         path: 'index',
         component: () => import('@/views/computer-info-management/index.vue'),
         name: 'ComputerInfoManagement',
-        meta: { title: '电脑信息管理', icon: 'dashboard' }
+        meta: { title: '所有电脑' }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/computer-info-management/computer-user.vue'),
+        name: 'ComputerUser',
+        meta: { title: '我的' }
       }
     ]
   }, {
