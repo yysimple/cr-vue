@@ -26,8 +26,9 @@ const resError = (status) => {
 }
 
 export const service = axios.create({
-  baseURL: 'http://123.57.190.160:6543',
+  // baseURL: 'http://49.235.107.34:6543',
   // baseURL: 'http://192.168.1.177:6543',
+  baseURL: 'http://127.0.0.1:6543',
   timeout: 30000
 })
 
